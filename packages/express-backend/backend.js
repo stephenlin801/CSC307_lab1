@@ -58,11 +58,11 @@ const findUserByJobandName = (job, name) => {
     return result.filter ((user) => user.job === job);
 };
 
-app.get("/users", (req, res) => { // need to get this extended better
+app.get("/users", (req, res) => {
 const name = req.query.name;
 const job = req.query.job;
 
-if (name != undefined && job != undefined) { // there is probably a better way to do this
+if (name != undefined && job != undefined) {
     let bothresult = findUserByJobandName(job, name);
     bothresult = { users_list: bothresult };
     res.send(bothresult)
@@ -106,8 +106,10 @@ return user;
 
 app.post("/users", (req, res) => {
 const userToAdd = req.body;
+const id = Math.random(); // ask if I should check that the id is truly unique, no need
+userToAdd["id"] = String(id);
 addUser(userToAdd);
-res.send();
+res.status(201).send(userToAdd);
 });
 
 
@@ -117,13 +119,14 @@ const deleteUserById = (id) => {
 
 app.delete("/users/:id", (req, res) => { // this is insecure but also fine, however to make it more secure have the id in the body and have it read it that way
 const id = req.params.id;
+//console.log(id);
 let result = findUserById(id);
 if (result === undefined) {
     res.status(404).send("Resource not found.");
 }
 else{
     deleteUserById(id);
-    res.end();
+    res.status(204).send();
 }
 
 });
