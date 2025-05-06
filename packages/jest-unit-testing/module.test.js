@@ -64,7 +64,7 @@ test("Testing containsNumbers 3 -- success", () => {
 });
 
 test("Testing containsNumbers 4 -- success", () => {
-  // the problem is that for some reason space trips it to be true
+  // the problem is that for some reason space trips it to be true, isNaN reads spaces as 0
   const got = mut.containsNumbers("one oh one");
   expect(got).toBeFalsy();
 });
@@ -75,7 +75,7 @@ test("Testing containsNumbers 5 -- success", () => {
 });
 
 test("Testing containsNumbers 6 -- success", () => {
-  // space makes the thing true even though there is no number
+  // space makes the thing true even though there is no number, the reason is that isNaN reads spaces as 0
   const got = mut.containsNumbers(" ");
   expect(got).toBeFalsy();
 });
